@@ -1,3 +1,5 @@
+import React, { useCallback } from 'react'
+
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import Tag from '@/components/Tag'
@@ -7,20 +9,80 @@ import formatDate from '@/lib/utils/formatDate'
 
 import NewsletterForm from '@/components/NewsletterForm'
 
+import useEmblaCarousel from 'embla-carousel-react'
+import { DotButton, useDotButton } from '@/components/EmblaCarouselDotButton'
+import Autoplay from 'embla-carousel-autoplay'
+
 const MAX_DISPLAY = 5
 
 export async function getStaticProps() {
   const posts = await getAllFilesFrontMatter('blog')
-
   return { props: { posts } }
 }
 
 export default function Home({ posts }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()])
+
+  const onButtonClick = useCallback((emblaApi) => {
+    const { autoplay } = emblaApi.plugins()
+    if (!autoplay) return
+    if (autoplay.options.stopOnInteraction !== false) autoplay.stop()
+  }, [])
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi, onButtonClick)
+
+  console.log(selectedIndex)
+
+  const handleSlider = (slug) => {
+    window.open(`/blog/${slug}`, '_self')
+  }
+
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
+      <div id="embla__viewport" className="overflow-hidden" ref={emblaRef}>
+        {/* Featured Posts */}
+        {!posts.length && 'No posts found.'}
+        <div id="embla__container" className="flex">
+          {posts.map((frontMatter) => {
+            if (frontMatter.featured) {
+              const { slug, date, title, summary, tags, featuredImage } = frontMatter
+              console.log(featuredImage)
+              return (
+                <div
+                  id="embla__slide"
+                  className="mx-10 my-2 flex-[0_0_100%] cursor-pointer overflow-clip rounded-lg text-center"
+                  key={slug}
+                  onClick={() => handleSlider(slug)}
+                >
+                  <div className=" flex h-48 items-center justify-center">
+                    <div className="absolute z-50 w-full font-sans text-2xl font-bold text-white">
+                      {title}
+                    </div>
+                    <img src={featuredImage} className="-z-50 brightness-50 filter" />
+                  </div>
+                </div>
+              )
+            }
+          })}
+        </div>
+
+        <div id="embla__dots" className="z-10 flex w-full justify-center">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              id={'embla__dot'.concat(index === selectedIndex ? ' embla__dot--selected' : '')}
+              className={
+                index === selectedIndex
+                  ? 'mx-1.5 h-1.5 w-8 rounded-full bg-primary-400'
+                  : 'mx-1.5 h-1.5 w-8 rounded-full bg-gray-200'
+              }
+            />
+          ))}
+        </div>
+      </div>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+        <div className="space-y-2 pb-8 pt-6 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             Latest
           </h1>
