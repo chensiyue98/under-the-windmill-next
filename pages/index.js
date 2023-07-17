@@ -33,8 +33,6 @@ export default function Home({ posts }) {
 		onButtonClick
 	);
 
-	console.log(selectedIndex);
-
 	const handleSlider = (slug) => {
 		window.open(`/blog/${slug}`, "_self");
 	};
@@ -53,7 +51,6 @@ export default function Home({ posts }) {
 						if (frontMatter.featured) {
 							const { slug, date, title, summary, tags, featuredImage } =
 								frontMatter;
-							console.log(featuredImage);
 							return (
 								<div
 									id="embla__slide"
@@ -62,7 +59,7 @@ export default function Home({ posts }) {
 									onClick={() => handleSlider(slug)}
 								>
 									<div className=" flex h-48 items-center justify-center">
-										<div className="absolute z-50 w-full font-sans text-2xl font-bold text-white">
+										<div className="absolute z-50 w-full font-sans text-2xl font-bold text-white hover:text-orange-200">
 											{title}
 										</div>
 										<img
@@ -90,7 +87,7 @@ export default function Home({ posts }) {
 							className={
 								index === selectedIndex
 									? "mx-1.5 h-1.5 w-8 rounded-full bg-primary-400"
-									: "mx-1.5 h-1.5 w-8 rounded-full bg-gray-200"
+									: "mx-1.5 h-1.5 w-8 rounded-full bg-gray-200 hover:bg-primary-200"
 							}
 						/>
 					))}
@@ -164,7 +161,7 @@ export default function Home({ posts }) {
 						className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 						aria-label="all posts"
 					>
-						All Posts &rarr;
+						全部文章 &rarr;
 					</Link>
 				</div>
 			)}
