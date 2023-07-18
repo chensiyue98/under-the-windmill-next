@@ -45,7 +45,7 @@ export default function Home({ posts }) {
 			<div id="embla__viewport" className="overflow-hidden" ref={emblaRef}>
 				{/* Featured Posts */}
 				{!posts.length && "No posts found."}
-				<div id="embla__container" className="flex">
+				<div id="embla__container" className="">
 					{posts.map((frontMatter) => {
 						if (frontMatter.featured) {
 							const { slug, date, title, summary, tags, featuredImage } =
