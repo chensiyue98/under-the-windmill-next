@@ -7,7 +7,6 @@ import siteMetadata from "@/data/siteMetadata";
 import { getAllFilesFrontMatter } from "@/lib/mdx";
 import formatDate from "@/lib/utils/formatDate";
 
-import NewsletterForm from "@/components/NewsletterForm";
 
 import useEmblaCarousel from "embla-carousel-react";
 import { DotButton, useDotButton } from "@/components/EmblaCarouselDotButton";
@@ -163,11 +162,6 @@ export default function Home({ posts }) {
 					>
 						全部文章 &rarr;
 					</Link>
-				</div>
-			)}
-			{siteMetadata.newsletter.provider !== "" && (
-				<div className="flex items-center justify-center pt-4">
-					<NewsletterForm />
 				</div>
 			)}
 		</>
