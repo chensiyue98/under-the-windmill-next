@@ -2,8 +2,7 @@
 name: Siyue Chen
 avatar: /static/images/avatar.png
 occupation: Software Engineer
-email: address@yoursite.com
-linkedin: https://www.linkedin.com
+email: chensiyue98@hotmail.com
 ---
 
-Hi!
+来自海边小城，生活在荷兰。
