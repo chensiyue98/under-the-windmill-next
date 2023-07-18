@@ -53,12 +53,12 @@ export default function Home({ posts }) {
 							return (
 								<div
 									id="embla__slide"
-									className="mx-10 flex-[0_0_100%] cursor-pointer overflow-clip rounded-lg text-center"
+									className="sm:mx-10 flex-[0_0_100%] cursor-pointer overflow-clip rounded-lg text-center"
 									key={slug}
 									onClick={() => handleSlider(slug)}
 								>
 									<div className=" flex h-48 items-center justify-center">
-										<div className="absolute z-50 w-full font-sans text-2xl font-bold text-white hover:text-orange-200">
+										<div className="absolute z-50 w-full font-sans sm:text-2xl text-xl font-bold text-white hover:text-orange-200">
 											{title}
 										</div>
 										<img
